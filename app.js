@@ -1,7 +1,8 @@
-const todoForm = document.getElementById('todo-form');
+// DOM
 const todoContainer = document.getElementById('todo-container');
+const todoForm = document.getElementById('todo-form');
 
-// Load saved todos on page load
+// loading
 window.addEventListener('load', () => {
     const savedTodos = getSavedTodos();
     savedTodos.forEach((todo) => {
@@ -9,20 +10,24 @@ window.addEventListener('load', () => {
     });
 });
 
+// submit
 todoForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const newTodo = todoForm.querySelector('input').value;
-    todoForm.reset();
-    todoContainer.insertAdjacentHTML('beforeend', createTodoItem(newTodo));
-    saveNewTodo(newTodo);
-});
+    const newTodo = todoForm.querySelector('input').value.trim();
+    if (newTodo !== '') {
+        todoForm.reset();
+        todoContainer.insertAdjacentHTML('beforeend', createTodoItem(newTodo));
+        saveNewTodo(newTodo);
+    }
+})
 
+// function
 function createTodoItem(todo) {
     return `
-        <div class="todo-item">
-            <span>${todo}</span>
-            <span class="delete-button" onclick="deleteTodoItem(this)">X</span>
-        </div>
+    <div class="todo-item">
+        <span>${todo}</span>
+        <span class="delete-button" onclick="deleteTodoItem(this)">X</span>
+    </div>
     `;
 }
 
